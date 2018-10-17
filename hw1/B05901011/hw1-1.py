@@ -11,7 +11,7 @@ if len(sys.argv) != 2:
 i_prefix, o_prefix = 'testdata/', 'grey/'
 
 def conventional_bgr_to_y(bgr, file):
-   cvt = np.array([0.0114, 0.0587, 0.299]).transpose() # b g r
+   cvt = np.array([0.114, 0.587, 0.299]).transpose() # b g r
    y = bgr.dot(cvt)
    folder = file + '/'
    file_name = 'c-' + file + '.png'
@@ -19,13 +19,13 @@ def conventional_bgr_to_y(bgr, file):
    print('Saving file ' + file_name + '...')
    
 def quantize_bgr_to_y(bgr, file):
-   L = [round(i * 0.1, 2) for i in range(11)]
+   L = [round(i * 0.1, 1) for i in range(11)]
    W_list = []
    # initilize the weighs
    for i in L:
       for j in L:
          if i + j <= 1:
-            W_list.append((i, j, abs(round(1 - i - j, 2))))
+            W_list.append((i, j, abs(round(1 - i - j, 1))))
    W = np.array(W_list)
 
    folder = file + '/'

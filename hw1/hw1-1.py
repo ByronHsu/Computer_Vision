@@ -11,7 +11,7 @@ if len(sys.argv) != 2:
 i_prefix, o_prefix = 'testdata/', 'grey/'
 
 def conventional_bgr_to_y(bgr, file):
-   cvt = np.array([0.0114, 0.0587, 0.299]).transpose() # b g r
+   cvt = np.array([0.114, 0.587, 0.299]).transpose() # b g r
    y = bgr.dot(cvt)
    folder = file + '/'
    file_name = 'c-' + file + '.png'

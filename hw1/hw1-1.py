@@ -19,13 +19,13 @@ def conventional_bgr_to_y(bgr, file):
    print('Saving file ' + file_name + '...')
    
 def quantize_bgr_to_y(bgr, file):
-   L = [round(i * 0.1, 2) for i in range(11)]
+   L = [round(i * 0.1, 1) for i in range(11)]
    W_list = []
    # initilize the weighs
    for i in L:
       for j in L:
          if i + j <= 1:
-            W_list.append((i, j, abs(round(1 - i - j, 2))))
+            W_list.append((i, j, abs(round(1 - i - j, 1))))
    W = np.array(W_list)
 
    folder = file + '/'

@@ -1,0 +1,36 @@
+PCA: k = 1, n = 3
+Total Accuracy: 0.4069444444444444
+PCA: k = 1, n = 10
+Total Accuracy: 0.5666666666666668
+PCA: k = 1, n = 39
+Total Accuracy: 0.6888888888888888
+PCA: k = 3, n = 3
+Total Accuracy: 0.4069444444444444
+PCA: k = 3, n = 10
+Total Accuracy: 0.5666666666666668
+PCA: k = 3, n = 39
+Total Accuracy: 0.6888888888888888
+PCA: k = 5, n = 3
+Total Accuracy: 0.4069444444444444
+PCA: k = 5, n = 10
+Total Accuracy: 0.5666666666666668
+PCA: k = 5, n = 39
+Total Accuracy: 0.6888888888888888
+LDA: k = 1, n = 3
+Total Accuracy: 0.9888888888888889
+LDA: k = 1, n = 10
+Total Accuracy: 0.9888888888888889
+LDA: k = 1, n = 39
+Total Accuracy: 0.9888888888888889
+LDA: k = 3, n = 3
+Total Accuracy: 0.9888888888888889
+LDA: k = 3, n = 10
+Total Accuracy: 0.9888888888888889
+LDA: k = 3, n = 39
+Total Accuracy: 0.9888888888888889
+LDA: k = 5, n = 3
+Total Accuracy: 0.9888888888888889
+LDA: k = 5, n = 10
+Total Accuracy: 0.9888888888888889
+LDA: k = 5, n = 39
+Total Accuracy: 0.9888888888888889

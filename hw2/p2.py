@@ -198,7 +198,6 @@ if __name__ == '__main__':
    # draw_pca_test(pcas[:, :100], np.average(imgs, axis = 0))
    ldas = LDA(imgs, pcas)
    # draw_lda_test(ldas[:, :30], np.average(imgs, axis = 0))
-   # k = {1, 3, 5} and n = {3, 10, 39}.
    K, N = [1, 3, 5], [3, 10, 39]
 
    for k in K:

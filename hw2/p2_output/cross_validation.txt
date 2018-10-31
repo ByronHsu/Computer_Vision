@@ -1,36 +1,90 @@
 PCA: k = 1, n = 3
-Total Accuracy: 0.4069444444444444
+Accuracy: 0.775
+Accuracy: 0.65
+Accuracy: 0.6875
+Total Accuracy: 0.7041666666666666
 PCA: k = 1, n = 10
-Total Accuracy: 0.5666666666666668
+Accuracy: 0.9375
+Accuracy: 0.8666666666666667
+Accuracy: 0.825
+Total Accuracy: 0.8763888888888888
 PCA: k = 1, n = 39
-Total Accuracy: 0.6888888888888888
+Accuracy: 0.95
+Accuracy: 0.9166666666666666
+Accuracy: 0.9
+Total Accuracy: 0.9222222222222222
 PCA: k = 3, n = 3
-Total Accuracy: 0.4069444444444444
+Accuracy: 0.725
+Accuracy: 0.65
+Accuracy: 0.6625
+Total Accuracy: 0.6791666666666667
 PCA: k = 3, n = 10
-Total Accuracy: 0.5666666666666668
+Accuracy: 0.8375
+Accuracy: 0.8083333333333333
+Accuracy: 0.7625
+Total Accuracy: 0.8027777777777777
 PCA: k = 3, n = 39
-Total Accuracy: 0.6888888888888888
+Accuracy: 0.9375
+Accuracy: 0.85
+Accuracy: 0.8875
+Total Accuracy: 0.8916666666666666
 PCA: k = 5, n = 3
-Total Accuracy: 0.4069444444444444
+Accuracy: 0.6
+Accuracy: 0.5583333333333333
+Accuracy: 0.6
+Total Accuracy: 0.5861111111111111
 PCA: k = 5, n = 10
-Total Accuracy: 0.5666666666666668
+Accuracy: 0.825
+Accuracy: 0.7833333333333333
+Accuracy: 0.7375
+Total Accuracy: 0.7819444444444444
 PCA: k = 5, n = 39
-Total Accuracy: 0.6888888888888888
+Accuracy: 0.9
+Accuracy: 0.825
+Accuracy: 0.8125
+Total Accuracy: 0.8458333333333333
 LDA: k = 1, n = 3
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0
 LDA: k = 1, n = 10
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0
 LDA: k = 1, n = 39
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0
 LDA: k = 3, n = 3
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0
 LDA: k = 3, n = 10
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0
 LDA: k = 3, n = 39
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0
 LDA: k = 5, n = 3
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0
 LDA: k = 5, n = 10
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0
 LDA: k = 5, n = 39
-Total Accuracy: 0.9888888888888889
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+Total Accuracy: 1.0

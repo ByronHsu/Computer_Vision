@@ -185,7 +185,7 @@ def cross_validation(k, n, imgs, vecs): # vecs代表pcas/ldas
                val = Map[idx]
          if res == test_y[m]:
             correct += 1
-      print('Accuracy: {}'.format(correct / test_p.shape[0]))
+      # print('Accuracy: {}'.format(correct / test_p.shape[0]))
       total_acc += correct / test_p.shape[0]
    total_acc = total_acc / 3
    print('Total Accuracy: {}'.format(total_acc))

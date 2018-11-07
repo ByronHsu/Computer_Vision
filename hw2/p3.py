@@ -88,7 +88,7 @@ def train(e):
       loss.backward()
       optimizer.step()
       if i % 10 == 0:
-         print('Train - Epoch {}, Batch: {}, Avg Loss: {:.3f}'.format(e, i, loss.data.item() / 256))
+         print('Train - Epoch {}, Batch: {}, Avg Loss: {:.5f}'.format(e, i, loss.data.item() / 256))
 
 def valid():
    net.eval()
@@ -104,7 +104,7 @@ def valid():
       total_correct += pred.eq(labels.data.view_as(pred)).sum()
 
    avg_loss /= len(data_test)
-   print('Validation - Avg Loss: {:.3f}, Accuracy: {:.3f}'.format(avg_loss.data.item(), float(total_correct) / len(data_test)))
+   print('Validation - Avg Loss: {:.5f}, Accuracy: {:.5f}'.format(avg_loss.data.item(), float(total_correct) / len(data_test)))
    
    # training set
    total_correct = 0
@@ -117,7 +117,7 @@ def valid():
       pred = output.data.max(1)[1]
       total_correct += pred.eq(labels.data.view_as(pred)).sum()
    avg_loss /= len(data_train)
-   print('Training - Avg Loss: {:.3f}, Accuracy: {:.3f}'.format(avg_loss.data.item(), float(total_correct) / len(data_train)))
+   print('Training - Avg Loss: {:.5f}, Accuracy: {:.5f}'.format(avg_loss.data.item(), float(total_correct) / len(data_train)))
 
 def train_and_test(epoch):
    for i in range(epoch):

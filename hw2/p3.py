@@ -52,6 +52,7 @@ class LeNet5(nn.Module): # Module: base class for nn model
       output = self.fc(output)
       return output
 
+# TODO: Define transformer
 class ImageSet(Dataset):
    def __init__(self, folder, rng):
       # load all data into data_list
@@ -63,8 +64,6 @@ class ImageSet(Dataset):
             img = img.astype(np.float32)
             img = img.reshape(1, 28, 28) # img: 28 x 28
             img = img / 255 # normalize
-            # print(img)
-            # input()
             label = i
             data_list.append({'img': img, 'label': label})
       self.data = data_list
@@ -88,41 +87,42 @@ def train(e):
       loss.backward()
       optimizer.step()
       if i % 10 == 0:
-         print('Train - Epoch {}, Batch: {}, Avg Loss: {:.5f}'.format(e, i, loss.data.item() / 256))
+         print('Train - Epoch {}, Batch: {}, Loss: {:.5f}'.format(e, i, loss.data.item()))
 
 def valid():
    net.eval()
    # validation set
    total_correct = 0
-   avg_loss = 0.0
+   total_loss = 0.0
    for i, (images, labels) in enumerate(data_test_loader):
       if use_cuda:
          images, labels = images.cuda(), labels.cuda()
       output = net(images)
-      avg_loss += criterion(output, labels).sum()
+      total_loss += criterion(output, labels).sum()
       pred = output.data.max(1)[1]
       total_correct += pred.eq(labels.data.view_as(pred)).sum()
 
-   avg_loss /= len(data_test)
+   avg_loss = total_loss * data_test_loader.batch_size / len(data_test) # 一個loss代表batch中平均的loss
    print('Validation - Avg Loss: {:.5f}, Accuracy: {:.5f}'.format(avg_loss.data.item(), float(total_correct) / len(data_test)))
    
    # training set
    total_correct = 0
-   avg_loss = 0.0
+   total_loss = 0.0
    for i, (images, labels) in enumerate(data_train_loader):
       if use_cuda:
          images, labels = images.cuda(), labels.cuda()
       output = net(images)
-      avg_loss += criterion(output, labels).sum()
+      total_loss += criterion(output, labels).sum()
       pred = output.data.max(1)[1]
       total_correct += pred.eq(labels.data.view_as(pred)).sum()
-   avg_loss /= len(data_train)
+      
+   avg_loss = total_loss * data_train_loader.batch_size / len(data_train)
    print('Training - Avg Loss: {:.5f}, Accuracy: {:.5f}'.format(avg_loss.data.item(), float(total_correct) / len(data_train)))
 
-def train_and_test(epoch):
+def train_and_valid(epoch):
    for i in range(epoch):
       train(i)
-      valid()
+      # valid()
 
 net = LeNet5()
 if use_cuda:
@@ -135,4 +135,5 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr = 1e-3)
 
 if __name__ == '__main__':
-   train_and_test(30)
+   train_and_valid(2)
+   torch.save(net.state_dict(), 'lenet5.pt')

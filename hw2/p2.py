@@ -147,17 +147,21 @@ def cross_validation(k, n, imgs, vecs): # vecs代表pcas/ldas
          labels.append(i + 1) # img_1-40
    labels = np.array(labels, dtype = int)
    total_acc = 0
+   # vecs 只取n cols
+   vecs = vecs[:, :n]
+   
    for i in range(3):
-      b = np.ones(g_item, dtype = bool)
-      b[round(g_item * (i / 3)) : round(g_item * ( (i + 1) / 3 ))] = False
-      b = np.tile(b, g_num)
+      ratio = 2 / 3
+      msk = np.random.rand(g_item * g_num) < ratio
+      # msk = np.ones(g_item, dtype = bool)
+      # msk[round(g_item * (i / 3)) : round(g_item * ( (i + 1) / 3 ))] = False
+      # msk = np.tile(msk, g_num)
       # slice出train, test
-      train_x = imgs[b]
-      train_y = labels[b]
-      test_x = imgs[~b]
-      test_y = labels[~b]
-      # vecs 只取n cols
-      vecs = vecs[:, :n]
+      train_x = imgs[msk]
+      train_y = labels[msk]
+      test_x = imgs[~msk]
+      test_y = labels[~msk]
+
       # 得 train_p (projected) N x n
       train_p = train_x @ vecs
       # 得 test_p (projected) N x n
@@ -188,7 +192,7 @@ def cross_validation(k, n, imgs, vecs): # vecs代表pcas/ldas
       # print('Accuracy: {}'.format(correct / test_p.shape[0]))
       total_acc += correct / test_p.shape[0]
    total_acc = total_acc / 3
-   print('Total Accuracy: {}'.format(total_acc))
+   print('Total Accuracy: {}'.format(round(total_acc, 3)))
 
 if __name__ == '__main__':
    imgs = process_train()

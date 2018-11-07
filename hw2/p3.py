@@ -88,7 +88,7 @@ def train(e):
       loss.backward()
       optimizer.step()
       if i % 10 == 0:
-         print('Train - Epoch {}, Batch: {}, Loss: {:3f}'.format(e, i, loss.data.item()))
+         print('Train - Epoch {}, Batch: {}, Avg Loss: {:.3f}'.format(e, i, loss.data.item() / 256))
 
 def valid():
    net.eval()

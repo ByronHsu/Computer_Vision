@@ -79,9 +79,7 @@
    | :--: | :------------------------------------------------: | :------------------------------------------------: | :------------------------------------------------: |
    |  3   | Validation Acc : 0.66526<br/>Testing Acc : 0.58333 | Validation Acc : 0.64244<br/>Testing Acc : 0.53333 | Validation Acc : 0.48077<br/>Testing Acc : 0.48333 |
    |  10  | Validation Acc : 0.88828<br/>Testing Acc : 0.94167 | Validation Acc : 0.67460<br/>Testing Acc : 0.85000 | Validation Acc : 0.61451<br/>Testing Acc : 0.77500 |
-   |  39  | Validation Acc : 0.92685<br/>Testing Acc : 0.95833 |   Validation Acc : 0.83170
-Testing Acc : 0.93333    |   Validation Acc : 0.74098
-Testing Acc : 0.90833    |
+   |  39  | Validation Acc : 0.92685<br/>Testing Acc : 0.95833 | Validation Acc : 0.83170<br/>Testing Acc : 0.93333 | Validation Acc : 0.74098<br/>Testing Acc : 0.90833 |
 
 2. LDA
 
@@ -94,6 +92,7 @@ Testing Acc : 0.90833    |
    |  3   | Validation Acc : 1.00000<br/>Testing Acc : 0.29167 | Validation Acc : 0.95789<br/>Testing Acc : 0.29167 | Validation Acc : 0.83072<br/>Testing Acc : 0.29167 |
    |  10  | Validation Acc : 1.00000<br/>Testing Acc : 0.79167 | Validation Acc : 0.97872<br/>Testing Acc : 0.80000 | Validation Acc : 0.92791<br/>Testing Acc : 0.79167 |
    |  39  | Validation Acc : 1.00000<br/>Testing Acc : 0.91667 | Validation Acc : 0.97333<br/>Testing Acc : 0.90833 | Validation Acc : 0.89646<br/>Testing Acc : 0.91667 |
+
 
 
 **Observation**: 直覺來講lda因為有考慮進去分群的概念，testing set上的acc應當要比較高，但在我的實驗中，沒有這個現象，可能原因推測是訓練資料不夠多，不足以fit出一個好的lda

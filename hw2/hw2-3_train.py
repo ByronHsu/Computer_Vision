@@ -63,11 +63,11 @@ def valid():
    acc = float(total_correct) / len(data_train)
    avg_loss = total_loss * data_train_loader.batch_size / len(data_train)
    train_acc.append(acc)
-   train_loss.append(avg_loss)
+   train_loss.append(avg_loss.data.item())
    print('Training - Avg Loss: {:.5f}, Accuracy: {:.5f}'.format(avg_loss.data.item(), acc))
 
-train_acc = [1, 3, 5]
-train_loss = [3, 4, 4]
+train_acc = []
+train_loss = []
 
 def plot():
    plt.subplots_adjust(wspace = 0.5)
@@ -85,9 +85,9 @@ def plot():
    print('Successfully save learning curve png!')
 
 def train_and_valid(epoch):
-   # for i in range(epoch):
-   #    train(i)
-   #    # valid()
+   for i in range(epoch):
+      train(i)
+      valid()
    plot()
 
 
@@ -103,5 +103,5 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr = 1e-3)
 
 if __name__ == '__main__':
-   train_and_valid(10)
+   train_and_valid(50)
    torch.save(net.state_dict(), 'lenet5.pt')

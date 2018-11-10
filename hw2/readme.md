@@ -26,8 +26,8 @@
 
 1. Perform PCA on the training data. Plot the mean face and the first five eigenfaces and show them in the report.
 
-   | Mean-face                                     | E1                                               | E2                                               | E3                                               | E4                                               | E5                                               |
-   | --------------------------------------------- | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ |
+   |                  Mean                   |                     E1                     |                     E2                     |                     E3                     |                     E4                     |                     E5                     |
+   | :-------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: |
    | <img src = "hw2-2_output/meanface.png"> | <img src = "hw2-2_output/eigenface-0.png"> | <img src = "hw2-2_output/eigenface-1.png"> | <img src = "hw2-2_output/eigenface-2.png"> | <img src = "hw2-2_output/eigenface-3.png"> | <img src = "hw2-2_output/eigenface-4.png"> |
 
 2. Take 𝒑𝒆𝒓𝒔𝒐𝒏8_ 𝒊𝒎𝒂𝒈𝒆6, and project it onto the above PCA eigenspace. Reconstruct this image using the first n = { 5, 50, 150, all } eigenfaces. For each n, compute the mean square error (MSE) between the reconstructed face image and the original 𝒑𝒆𝒓𝒔𝒐𝒏8_ 𝒊𝒎𝒂𝒈𝒆6. Plot these reconstructed images with the corresponding MSE values in the report.
@@ -87,11 +87,11 @@
 
    這組參數若選擇正確率最高的(3, 1), (10, 1), (39, 1)的話，在testing的結果很可能壞掉。
 
-   | n\k  |                         1                          |                         3                          |                         5                          |
-   | :--: | :------------------------------------------------: | :------------------------------------------------: | :------------------------------------------------: |
-   |  3   | Validation Acc : 1.00000<br/>Testing Acc : 0.29167 | Validation Acc : 0.95789<br/>Testing Acc : 0.29167 | Validation Acc : 0.83072<br/>Testing Acc : 0.29167 |
-   |  10  | Validation Acc : 1.00000<br/>Testing Acc : 0.79167 | Validation Acc : 0.97872<br/>Testing Acc : 0.80000 | Validation Acc : 0.92791<br/>Testing Acc : 0.79167 |
-   |  39  | Validation Acc : 1.00000<br/>Testing Acc : 0.91667 | Validation Acc : 0.97333<br/>Testing Acc : 0.90833 | Validation Acc : 0.89646<br/>Testing Acc : 0.91667 |
+| n\k  |                         1                          |                         3                          |                         5                          |
+| :--: | :------------------------------------------------: | :------------------------------------------------: | :------------------------------------------------: |
+|  3   | Validation Acc : 1.00000<br/>Testing Acc : 0.29167 | Validation Acc : 0.95789<br/>Testing Acc : 0.29167 | Validation Acc : 0.83072<br/>Testing Acc : 0.29167 |
+|  10  | Validation Acc : 1.00000<br/>Testing Acc : 0.79167 | Validation Acc : 0.97872<br/>Testing Acc : 0.80000 | Validation Acc : 0.92791<br/>Testing Acc : 0.79167 |
+|  39  | Validation Acc : 1.00000<br/>Testing Acc : 0.91667 | Validation Acc : 0.97333<br/>Testing Acc : 0.90833 | Validation Acc : 0.89646<br/>Testing Acc : 0.91667 |
 
 
 

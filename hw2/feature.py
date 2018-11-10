@@ -33,7 +33,7 @@ def visualize_feature(image, layer_idx):
       if index == layer_idx:
          return output
 
-data = ImageSet('p3_data/valid/', [5000, 5100]) # 每組100張
+data = ImageSet('hw2-3_data/valid/', [5000, 5100]) # 每組100張
 data_loader = DataLoader(data, batch_size = 1)
 
 def plot(X, title):

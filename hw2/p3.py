@@ -127,13 +127,13 @@ def train_and_valid(epoch):
 net = LeNet5()
 if use_cuda:
    net = net.cuda()
-data_train = ImageSet('p3_data/train/', (0, 5000))
+data_train = ImageSet('hw2-3_data/train/', (0, 5000))
 data_train_loader = DataLoader(data_train, batch_size = 256, shuffle = True)
-data_test = ImageSet('p3_data/valid/', (5000, 6000))
+data_test = ImageSet('hw2-3_data/valid/', (5000, 6000))
 data_test_loader = DataLoader(data_test, batch_size = 1024)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr = 1e-3)
 
 if __name__ == '__main__':
-   train_and_valid(2)
+   train_and_valid(10)
    torch.save(net.state_dict(), 'lenet5.pt')

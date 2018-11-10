@@ -4,7 +4,8 @@ import torch
 import numpy as np
 import torch.optim as optim
 import torch.nn as nn
-from p3 import LeNet5
+from hw2_3_model import LeNet5
+
 o_prefix = 'hw2-3_output/'
 # detect gpu
 use_cuda = torch.cuda.is_available()

@@ -87,8 +87,8 @@ def plot():
 def train_and_valid(epoch):
    for i in range(epoch):
       train(i)
-      valid()
-   plot()
+      # valid()
+   # plot()
 
 
 net = LeNet5()
@@ -103,5 +103,5 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr = 1e-3)
 
 if __name__ == '__main__':
-   train_and_valid(50)
+   train_and_valid(10)
    torch.save(net.state_dict(), 'lenet5.pt')

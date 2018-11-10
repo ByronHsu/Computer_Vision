@@ -2,7 +2,8 @@ import os
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
-from p3 import LeNet5, ImageSet
+from hw2_3_model import LeNet5
+from hw2_3_utils import ImageSet
 from torch.utils.data import DataLoader, Dataset
 from sklearn.manifold import TSNE
 o_prefix = 'hw2-3_output/'

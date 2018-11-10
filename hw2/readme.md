@@ -107,6 +107,11 @@
 
 2. Report your training / validation accuracy, and plot the learning curve (loss, accuracy) of the training process.
 
+   <img src="hw2-3_output/learning-curve.png" width="500px"/>
+
+   - Validation - Avg Loss: 1.51086, Accuracy: 0.98580
+   - Training - Avg Loss: 1.47237, Accuracy: 0.99412
+
 3. Visualize at least 6 filters on both the first and the last convolutional layers.
 
    | layer\filter | 0                                  | 1                                  | 2                                  | 3                                  | 4                                  | 5                                  |

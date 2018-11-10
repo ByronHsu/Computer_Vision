@@ -85,13 +85,13 @@
 
     LDA的validation非常奇怪，正確率高到不太合理，我想了非常久，才發現應該是因為我們已經拿valid那塊data去作lda了，因此在validation時會有overfit的狀況發生。
 
-   這組參數若選擇正確率最高的(3, 1), (10, 1), (39, 1)的話，在testing的結果很可能壞掉。
+       這組參數若選擇正確率最高的(3, 1), (10, 1), (39, 1)的話，在testing的結果很可能壞掉。
 
-| n\k  |                         1                          |                         3                          |                         5                          |
-| :--: | :------------------------------------------------: | :------------------------------------------------: | :------------------------------------------------: |
-|  3   | Validation Acc : 1.00000<br/>Testing Acc : 0.29167 | Validation Acc : 0.95789<br/>Testing Acc : 0.29167 | Validation Acc : 0.83072<br/>Testing Acc : 0.29167 |
-|  10  | Validation Acc : 1.00000<br/>Testing Acc : 0.79167 | Validation Acc : 0.97872<br/>Testing Acc : 0.80000 | Validation Acc : 0.92791<br/>Testing Acc : 0.79167 |
-|  39  | Validation Acc : 1.00000<br/>Testing Acc : 0.91667 | Validation Acc : 0.97333<br/>Testing Acc : 0.90833 | Validation Acc : 0.89646<br/>Testing Acc : 0.91667 |
+    | n\k  |                         1                          |                         3                          |                         5                          |
+    | :--: | :------------------------------------------------: | :------------------------------------------------: | :------------------------------------------------: |
+    |  3   | Validation Acc : 1.00000<br/>Testing Acc : 0.29167 | Validation Acc : 0.95789<br/>Testing Acc : 0.29167 | Validation Acc : 0.83072<br/>Testing Acc : 0.29167 |
+    |  10  | Validation Acc : 1.00000<br/>Testing Acc : 0.79167 | Validation Acc : 0.97872<br/>Testing Acc : 0.80000 | Validation Acc : 0.92791<br/>Testing Acc : 0.79167 |
+    |  39  | Validation Acc : 1.00000<br/>Testing Acc : 0.91667 | Validation Acc : 0.97333<br/>Testing Acc : 0.90833 | Validation Acc : 0.89646<br/>Testing Acc : 0.91667 |
 
 
 

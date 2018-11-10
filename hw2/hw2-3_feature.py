@@ -1,17 +1,18 @@
+import os
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
 from p3 import LeNet5, ImageSet
 from torch.utils.data import DataLoader, Dataset
 from sklearn.manifold import TSNE
-
+o_prefix = 'hw2-3_output/'
 # detect gpu
 use_cuda = torch.cuda.is_available()
 
 model = LeNet5()
 if use_cuda:
    model.cuda()
-model.load_state_dict(torch.load('lenet5.pt'))
+model.load_state_dict(torch.load('lenet5.pt')) # remap everything onto CPU
 model.eval()
 
 
@@ -43,7 +44,7 @@ def plot(X, title):
       x_em, y_em = em[i : i + 100, 0], em[i : i + 100, 1]
       ax.scatter(x_em, y_em, alpha = 0.8, edgecolors='none')
    plt.title('{}'.format(title))
-   plt.savefig('{}.png'.format(title))
+   plt.savefig(os.path.join(o_prefix, '{}.png'.format(title)))
    print('Saving {}.png ...'.format(title))
 
 def run():
@@ -56,8 +57,8 @@ def run():
 
    l_fs = np.array(l_fs, dtype = np.float_).reshape(len(l_fs), -1)
    h_fs = np.array(h_fs, dtype = np.float_).reshape(len(h_fs), -1)
-   plot(l_fs, 'Low-Level Features')
-   plot(h_fs, 'High-Level Features')
+   plot(l_fs, 'Low-Level-Features')
+   plot(h_fs, 'High-Level-Features')
 
 if __name__ == '__main__':
    run()

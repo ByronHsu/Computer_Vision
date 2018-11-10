@@ -1,4 +1,4 @@
-# Computer Vision HW2 Report
+#  Computer Vision HW2 Report
 
 > B05901011 電機三 許秉倫
 
@@ -96,3 +96,30 @@
 
 
 3. **Observation**: 直覺來講lda因為有考慮進去分群的概念，testing set上的acc應當要比較高，但在我的實驗中，沒有這個現象，可能原因推測是訓練資料不夠多，不足以fit出一個好的lda
+
+## Problem3
+
+1. Build a CNN model and train it on the given dataset. Show the architecture of your model in the report.
+
+   <img src="problem/assets/p3-1.png"/>
+
+   我使用lenet5當作model，並在其中加入一些``Relu()``
+
+2. Report your training / validation accuracy, and plot the learning curve (loss, accuracy) of the training process.
+
+3. Visualize at least 6 filters on both the first and the last convolutional layers.
+
+   | layer\filter | 0                                  | 1                                  | 2                                  | 3                                  | 4                                  | 5                                  |
+   | ------------ | ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
+   | C1           | <img src="hw2-3_output/0-0.png" /> | <img src="hw2-3_output/0-1.png" /> | <img src="hw2-3_output/0-2.png" /> | <img src="hw2-3_output/0-3.png" /> | <img src="hw2-3_output/0-4.png" /> | <img src="hw2-3_output/0-5.png" /> |
+   | C5           | <img src="hw2-3_output/3-0.png" /> | <img src="hw2-3_output/3-1.png" /> | <img src="hw2-3_output/3-2.png" /> | <img src="hw2-3_output/3-3.png" /> | <img src="hw2-3_output/3-4.png" /> | <img src="hw2-3_output/3-5.png" /> |
+
+   由此可見，後層的conv layer，已經可識別出一些類似幾何、簡單筆畫的圖形
+
+4. Visualize high-level and low-level features of 1000 validation data (100 for each class) extracted from different layers, and explain what you have observed from the two t-SNE plots.
+
+   | Low-level(C1 layer)                               | High-level(S4 layer)                               |
+   | ------------------------------------------------- | -------------------------------------------------- |
+   | <img src="hw2-3_output/Low-Level-Features.png" /> | <img src="hw2-3_output/High-Level-Features.png" /> |
+
+   由上圖比較可發現，在high-level時資料分群效果明顯比low-level好很多，原因是越到後層，input的feature更被彰顯出來，將資料分的更開。

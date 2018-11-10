@@ -1,10 +1,11 @@
+import os
+import cv2
 import torch
 import numpy as np
 import torch.optim as optim
 import torch.nn as nn
-import cv2
 from p3 import LeNet5
-
+o_prefix = 'hw2-3_output/'
 # detect gpu
 use_cuda = torch.cuda.is_available()
 
@@ -25,15 +26,14 @@ def get_best_x(layer_idx, filter_idx):
       model.conv_output = out[0][filter_idx]
 
    model.convnet[layer_idx].register_forward_hook(hook)
-
    optimizer = optim.SGD([x], lr = 1)
-   iter_times = 10000
+   iter_times = 1000
    sig = nn.Sigmoid()
    for i in range(iter_times):
       y = torch.clamp(x, 0 ,1)
       optimizer.zero_grad()
       model(y)
-      loss = - torch.mean(model.conv_output) + torch.mean(torch.abs(y)) # 加負 => gradient ascent
+      loss = - torch.mean(model.conv_output) # + torch.mean(torch.abs(y)) # 加負 => gradient ascent
       print('Iter: {} Activation: {}'.format(i, loss.data.item()))
       loss.backward()
       optimizer.step()
@@ -42,14 +42,12 @@ def get_best_x(layer_idx, filter_idx):
    res = res.reshape(28, 28)
    res = res * 255
    print(res.shape)
-   cv2.imwrite('{}-{}.png'.format(layer_idx ,filter_idx), res)
+   cv2.imwrite(os.path.join(o_prefix, '{}-{}.png'.format(layer_idx ,filter_idx)), res)
 
-# get_best_x(0, 1)
-# get_best_x(0, 2)
-print(model)
-get_best_x(3, 1)
-get_best_x(3, 2)
-get_best_x(3, 3)
-get_best_x(3, 4)
-get_best_x(3, 5)
-get_best_x(3, 6)
+def run():
+   for i in [0, 3]:
+      for j in range(6):
+         get_best_x(i, j)
+
+if __name__ == '__main__':
+   run()

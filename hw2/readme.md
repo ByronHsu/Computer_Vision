@@ -6,7 +6,7 @@ Computer Vision HW2 Report
 
 1. Assume 𝑋 is a continuous random variable that denotes the estimated probability of a binary classifier. The instance is classified as positive if 𝑋 > 𝑇 and negative otherwise. When the instance is positive, 𝑋 follows a PDF 𝑓1(𝑥). When the instance is negative, 𝑋 follows a PDF 𝑓2(𝑥). Please specify which regions (A ~ E) represent the cases of False Positive and False Negative, respectively. Clearly explain why.
 
-   <img src="/Users/byronhsu/Google%20Drive/NTUEE107_1/Computer_Vision/hw2/problem/assets/p1-1.png" width="300px"/>
+   <img src="problem/assets/p1-1.png" width="300px"/>
 
    - False Positive: B + C區。假正，被模型預測為正的負樣本
    - False Negative: E區。假負，被模型預測為負的正樣本 
@@ -55,7 +55,7 @@ Computer Vision HW2 Report
 
    2. Use t-SNE to visualize the distribution of the projected testing data, which has the dimension of 30.
 
-      <img src = "hw2-2/hw2-2_output/lda-scattering.png" width="500px">
+      <img src = "hw2-2/hw2-2_output/LDA-scattering.png" width="500px">
 
 #### 3. KNN
 

@@ -81,7 +81,9 @@ def draw_pca_test(pcas, mean):
    print('Saving PCA-scattering.png ...')
 
 def LDA(imgs, pcas): # pcas: N - C x 2576
+   print(imgs)
    g_item, g_num = 7, 40
+   print(pcas)
    # project imgs to pcas (dim = N - C)
    # Slice pcas to N - C
    pcas = pcas[:, : imgs.shape[0] - g_num]
@@ -112,6 +114,7 @@ def LDA(imgs, pcas): # pcas: N - C x 2576
    #    img = img.reshape(H, W)
    #    cv2.imwrite(o_prefix + 'fisherface-' + str(i) + '.png', img)
    #    print('Saving fisherface-' + str(i) + '.png ...')
+   print(e_vecs)
    return e_vecs[:, 0 : g_num - 1] # 0 ~ g_num - 2
 
 # TODO: color
@@ -202,16 +205,16 @@ if __name__ == '__main__':
    #    reconstruct_pca(pcas[:, :i], imgs)
    # draw_pca_test(pcas[:, :100], np.average(imgs, axis = 0))
    ldas = LDA(imgs, pcas)
-   # draw_lda_test(ldas[:, :30], np.average(imgs, axis = 0))
-   K, N = [1, 3, 5], [3, 10, 39]
+   draw_lda_test(ldas[:, :30], np.average(imgs, axis = 0))
+   # K, N = [1, 3, 5], [3, 10, 39]
 
-   for k in K:
-      for n in N:
-         print('PCA: k = {}, n = {}'.format(k, n))
-         cross_validation(k, n, imgs, pcas)
+   # for k in K:
+   #    for n in N:
+   #       print('PCA: k = {}, n = {}'.format(k, n))
+   #       cross_validation(k, n, imgs, pcas)
 
-   for k in K:
-      for n in N:
-         print('LDA: k = {}, n = {}'.format(k, n))
-         cross_validation(k, n, imgs, ldas)
+   # for k in K:
+   #    for n in N:
+   #       print('LDA: k = {}, n = {}'.format(k, n))
+   #       cross_validation(k, n, imgs, ldas)
    

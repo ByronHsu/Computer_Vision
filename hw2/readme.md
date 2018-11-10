@@ -28,20 +28,20 @@
 
    | Mean-face                                     | E1                                               | E2                                               | E3                                               | E4                                               | E5                                               |
    | --------------------------------------------- | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ |
-   | <img src = "hw2-2/hw2-2_output/meanface.png"> | <img src = "hw2-2/hw2-2_output/eigenface-0.png"> | <img src = "hw2-2/hw2-2_output/eigenface-1.png"> | <img src = "hw2-2/hw2-2_output/eigenface-2.png"> | <img src = "hw2-2/hw2-2_output/eigenface-3.png"> | <img src = "hw2-2/hw2-2_output/eigenface-4.png"> |
+   | <img src = "hw2-2_output/meanface.png"> | <img src = "hw2-2_output/eigenface-0.png"> | <img src = "hw2-2_output/eigenface-1.png"> | <img src = "hw2-2_output/eigenface-2.png"> | <img src = "hw2-2_output/eigenface-3.png"> | <img src = "hw2-2_output/eigenface-4.png"> |
 
 2. Take 𝒑𝒆𝒓𝒔𝒐𝒏8_ 𝒊𝒎𝒂𝒈𝒆6, and project it onto the above PCA eigenspace. Reconstruct this image using the first n = { 5, 50, 150, all } eigenfaces. For each n, compute the mean square error (MSE) between the reconstructed face image and the original 𝒑𝒆𝒓𝒔𝒐𝒏8_ 𝒊𝒎𝒂𝒈𝒆6. Plot these reconstructed images with the corresponding MSE values in the report.
 
    | n    | MSE   | Reconstructed                                  |
    | ---- | ----- | ---------------------------------------------- |
-   | 5    | 693.7 | <img src = "hw2-2/hw2-2_output/8_6-n=5.png">   |
-   | 50   | 119.2 | <img src = "hw2-2/hw2-2_output/8_6-n=50.png">  |
-   | 150  | 40.40 | <img src = "hw2-2/hw2-2_output/8_6-n=150.png"> |
-   | 279  | 8.42  | <img src = "hw2-2/hw2-2_output/8_6-n=279.png"> |
+   | 5    | 693.7 | <img src = "hw2-2_output/8_6-n=5.png">   |
+   | 50   | 119.2 | <img src = "hw2-2_output/8_6-n=50.png">  |
+   | 150  | 40.40 | <img src = "hw2-2_output/8_6-n=150.png"> |
+   | 279  | 8.42  | <img src = "hw2-2_output/8_6-n=279.png"> |
 
 3. Reduce the dimension of the image in testing set to dim = 100. Use t-SNE to visualize the distribution of test images.
 
-<img src = "hw2-2/hw2-2_output/PCA-scattering.png" width="500px">
+<img src = "hw2-2_output/PCA-scattering.png" width="500px">
 
 #### 2. LDA
 
@@ -51,11 +51,11 @@
 
       | F1                                                | F2                                                | F3                                                | F4                                                | F5                                                |
       | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- |
-      | <img src = "hw2-2/hw2-2_output/fisherface-0.png"> | <img src = "hw2-2/hw2-2_output/fisherface-1.png"> | <img src = "hw2-2/hw2-2_output/fisherface-2.png"> | <img src = "hw2-2/hw2-2_output/fisherface-3.png"> | <img src = "hw2-2/hw2-2_output/fisherface-4.png"> |
+      | <img src = "hw2-2_output/fisherface-0.png"> | <img src = "hw2-2_output/fisherface-1.png"> | <img src = "hw2-2_output/fisherface-2.png"> | <img src = "hw2-2_output/fisherface-3.png"> | <img src = "hw2-2_output/fisherface-4.png"> |
 
    2. Use t-SNE to visualize the distribution of the projected testing data, which has the dimension of 30.
 
-      <img src = "hw2-2/hw2-2_output/LDA-scattering.png" width="500px">
+      <img src = "hw2-2_output/LDA-scattering.png" width="500px">
 
 #### 3. KNN
 
@@ -95,4 +95,4 @@
 
 
 
-**Observation**: 直覺來講lda因為有考慮進去分群的概念，testing set上的acc應當要比較高，但在我的實驗中，沒有這個現象，可能原因推測是訓練資料不夠多，不足以fit出一個好的lda
+3. **Observation**: 直覺來講lda因為有考慮進去分群的概念，testing set上的acc應當要比較高，但在我的實驗中，沒有這個現象，可能原因推測是訓練資料不夠多，不足以fit出一個好的lda

@@ -10,7 +10,7 @@ H, W = 56, 46
 
 def process_train(): # return n * m vector, n代表有幾張圖, m為flatten後的維度
    img_list = []
-   prefix = 'p2_data/'
+   prefix = 'hw2-2_data/'
    for i in class_list:
       for j in train_list:
          file_name = str(i) + '_' + str(j) + '.png'
@@ -20,14 +20,14 @@ def process_train(): # return n * m vector, n代表有幾張圖, m為flatten後�
    imgs = np.array(img_list, dtype = float)
    # print(img_np.shape)
    return imgs
-
+# TODO: eval要反轉
 def PCA(imgs):
-   prefix = 'p2_output/'
-   mean = np.average(imgs, axis = 0)
-   img = mean.reshape(H, W)
+   prefix = 'hw2-2_output/'
+   # mean = np.average(imgs, axis = 0)
+   # img = mean.reshape(H, W)
    # cv2.imwrite(prefix + 'meanface.png', img)
    # print('Saving meanface.png ...')
-   cov = np.cov(imgs, rowvar = False)
+   cov = np.cov(imgs, rowvar = False) # 以column為feature, row為一單位
    e_vals, e_vecs = np.linalg.eig(cov)
    e_vecs = np.real(e_vecs) # 只取實部
    N = imgs.shape[0]
@@ -42,8 +42,9 @@ def PCA(imgs):
    return e_vecs[:, 0 : N - 1] # 0 ~ N-2
 
 def reconstruct_pca(pcas, imgs):
+   # TODO: img: 一維?
    # pcas: 2576 x A, img: 2576 x 1
-   i_prefix = 'p2_data/'
+   i_prefix = 'hw2-2_data/'
    img = cv2.imread(i_prefix + '8_6.png', 0).flatten()
    mean = np.average(imgs, axis = 0)
    y = pcas.transpose() @ (img - mean) # A x 1
@@ -51,14 +52,14 @@ def reconstruct_pca(pcas, imgs):
    rmse = np.sum((img - x) ** 2) / (H * W)
    print('n = {}, MSE = {}'.format(pcas.shape[1] ,rmse))
    x = x.reshape(H, W)
-   o_prefix = 'p2_output/'
+   o_prefix = 'hw2-2_output/'
    cv2.imwrite(o_prefix + '8_6' + '-n=' + str(pcas.shape[1]) + '.png', x)
    print('Saving ' + '8_6' + '-n=' + str(pcas.shape[1]) + '.png ...')
 # TODO: color
 def draw_pca_test(pcas, mean):
    img_list = []
-   o_prefix = 'p2_output/'
-   i_prefix = 'p2_data/'
+   o_prefix = 'hw2-2_output/'
+   i_prefix = 'hw2-2_data/'
    for i in class_list:
       for j in test_list:
          file_name = str(i) + '_' + str(j) + '.png'
@@ -80,7 +81,9 @@ def draw_pca_test(pcas, mean):
    print('Saving PCA-scattering.png ...')
 
 def LDA(imgs, pcas): # pcas: N - C x 2576
+   print(imgs)
    g_item, g_num = 7, 40
+   print(pcas)
    # project imgs to pcas (dim = N - C)
    # Slice pcas to N - C
    pcas = pcas[:, : imgs.shape[0] - g_num]
@@ -103,7 +106,7 @@ def LDA(imgs, pcas): # pcas: N - C x 2576
    e_vals, e_vecs = np.linalg.eig(mat)
    e_vecs = np.real(e_vecs) # 只取實部 N - C x N - C
    e_vecs = pcas @ e_vecs # 2576 x N - C
-   # o_prefix = 'p2_output/'
+   # o_prefix = 'hw2-2_output/'
    # for i in range(5):
    #    img = e_vecs[:, i]
    #    img = img - np.min(img) # 把最小值移回設0
@@ -111,13 +114,14 @@ def LDA(imgs, pcas): # pcas: N - C x 2576
    #    img = img.reshape(H, W)
    #    cv2.imwrite(o_prefix + 'fisherface-' + str(i) + '.png', img)
    #    print('Saving fisherface-' + str(i) + '.png ...')
+   print(e_vecs)
    return e_vecs[:, 0 : g_num - 1] # 0 ~ g_num - 2
 
 # TODO: color
 def draw_lda_test(ldas, mean):
    img_list = []
-   o_prefix = 'p2_output/'
-   i_prefix = 'p2_data/'
+   o_prefix = 'hw2-2_output/'
+   i_prefix = 'hw2-2_data/'
    for i in class_list:
       for j in test_list:
          file_name = str(i) + '_' + str(j) + '.png'
@@ -201,16 +205,16 @@ if __name__ == '__main__':
    #    reconstruct_pca(pcas[:, :i], imgs)
    # draw_pca_test(pcas[:, :100], np.average(imgs, axis = 0))
    ldas = LDA(imgs, pcas)
-   # draw_lda_test(ldas[:, :30], np.average(imgs, axis = 0))
-   K, N = [1, 3, 5], [3, 10, 39]
+   draw_lda_test(ldas[:, :30], np.average(imgs, axis = 0))
+   # K, N = [1, 3, 5], [3, 10, 39]
 
-   for k in K:
-      for n in N:
-         print('PCA: k = {}, n = {}'.format(k, n))
-         cross_validation(k, n, imgs, pcas)
+   # for k in K:
+   #    for n in N:
+   #       print('PCA: k = {}, n = {}'.format(k, n))
+   #       cross_validation(k, n, imgs, pcas)
 
-   for k in K:
-      for n in N:
-         print('LDA: k = {}, n = {}'.format(k, n))
-         cross_validation(k, n, imgs, ldas)
+   # for k in K:
+   #    for n in N:
+   #       print('LDA: k = {}, n = {}'.format(k, n))
+   #       cross_validation(k, n, imgs, ldas)
    

@@ -134,8 +134,8 @@ def test(k, n, Type):
    print('Testing Acc : {:.5f}'.format(acc))
 
 model = Model()
-data_train, data_train_label = process_data('hw2-2_data/', train_list)
-data_test, data_test_label = process_data('hw2-2_data/', test_list)
+data_train, data_train_label = process_data('hw2-2_data', train_list)
+data_test, data_test_label = process_data('hw2-2_data', test_list)
 
 if __name__ == '__main__':
    model.mean = np.average(data_train, axis = 0) # set mean

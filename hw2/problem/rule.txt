@@ -8,7 +8,7 @@ Execution for HW2-2
 • python3 hw2-2_lda.py $1 $2
 • $1: path of whole dataset
 • $2: path of the first 1 Fisherface
-• E.g., python3 hw2-3_lda.py ./hw2/hw2-2_data ./output_fisher.png
+• E.g., python3 hw2-2_lda.py ./hw2/hw2-2_data ./output_fisher.png
 
 Execution for HW2-3
 • TAs will run your code in the following manner.

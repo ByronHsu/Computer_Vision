@@ -25,3 +25,7 @@ Execution for HW2-3
 • Output prediction file format • In csv format
 • First row: “id,label”
 • From second row: “<image_id>,<predicted_label>”
+
+• Your submission should include the following files.• report_StudentID.pdf (e.g., report_R07654321.pdf)• hw2-2_pca.py• hw2-2_lda.py• hw2-3_train.py• hw2-3_test.py• model files for hw2-3 (could be loaded by your python files)
+
+• Do not upload the dataset.• Compress all above files in a zip file named StudentID.zip• e.g., R07654321.zip• Submit your zip file to CEIBA.• Deadline:11/1311:00p.m.

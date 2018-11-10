@@ -2,7 +2,7 @@
 
 > B05901011 電機三 許秉倫
 
-### Problem 1
+## Problem 1
 
 1. Assume 𝑋 is a continuous random variable that denotes the estimated probability of a binary classifier. The instance is classified as positive if 𝑋 > 𝑇 and negative otherwise. When the instance is positive, 𝑋 follows a PDF 𝑓1(𝑥). When the instance is negative, 𝑋 follows a PDF 𝑓2(𝑥). Please specify which regions (A ~ E) represent the cases of False Positive and False Negative, respectively. Clearly explain why.
 
@@ -18,6 +18,8 @@
    - a, b為合理的曲線，因為P_D代表的是True Positive, P_FA代表的是False Positive，直觀的來看，不管邊界怎麼移動，P_D必定大於P_FA
    - 當兩種分布完全重疊時，ROC會落在b曲線
 
+<div style="page-break-after: always;"></div> 
+
 ## Problem 2
 
 #### 1. PCA
@@ -26,22 +28,22 @@
 
 1. Perform PCA on the training data. Plot the mean face and the first five eigenfaces and show them in the report.
 
-   |                  Mean                   |                     E1                     |                     E2                     |                     E3                     |                     E4                     |                     E5                     |
-   | :-------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: |
-   | <img src = "hw2-2_output/meanface.png"> | <img src = "hw2-2_output/eigenface-0.png"> | <img src = "hw2-2_output/eigenface-1.png"> | <img src = "hw2-2_output/eigenface-2.png"> | <img src = "hw2-2_output/eigenface-3.png"> | <img src = "hw2-2_output/eigenface-4.png"> |
+   |                 Mean                  |                     E1                     |                     E2                     |                     E3                     |                     E4                     |                     E5                     |
+   | :-----------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: |
+   | <img src="hw2-2_output/meanface.png"> | <img src="hw2-2_output/eigenface-0.png"> | <img src="hw2-2_output/eigenface-1.png"> | <img src="hw2-2_output/eigenface-2.png"> | <img src="hw2-2_output/eigenface-3.png"> | <img src="hw2-2_output/eigenface-4.png"> |
 
 2. Take 𝒑𝒆𝒓𝒔𝒐𝒏8_ 𝒊𝒎𝒂𝒈𝒆6, and project it onto the above PCA eigenspace. Reconstruct this image using the first n = { 5, 50, 150, all } eigenfaces. For each n, compute the mean square error (MSE) between the reconstructed face image and the original 𝒑𝒆𝒓𝒔𝒐𝒏8_ 𝒊𝒎𝒂𝒈𝒆6. Plot these reconstructed images with the corresponding MSE values in the report.
 
    | n    | MSE   | Reconstructed                                  |
    | ---- | ----- | ---------------------------------------------- |
-   | 5    | 693.7 | <img src = "hw2-2_output/8_6-n=5.png">   |
-   | 50   | 119.2 | <img src = "hw2-2_output/8_6-n=50.png">  |
-   | 150  | 40.40 | <img src = "hw2-2_output/8_6-n=150.png"> |
-   | 279  | 8.42  | <img src = "hw2-2_output/8_6-n=279.png"> |
+   | 5    | 693.7 | <img src="hw2-2_output/8_6-n=5.png">   |
+   | 50   | 119.2 | <img src="hw2-2_output/8_6-n=50.png">  |
+   | 150  | 40.40 | <img src="hw2-2_output/8_6-n=150.png"> |
+   | 279  | 8.42  | <img src="hw2-2_output/8_6-n=279.png"> |
 
 3. Reduce the dimension of the image in testing set to dim = 100. Use t-SNE to visualize the distribution of test images.
 
-<img src = "hw2-2_output/PCA-scattering.png" width="500px">
+<img src="hw2-2_output/PCA-scattering.png" width="500px">
 
 #### 2. LDA
 
@@ -51,11 +53,11 @@
 
       | F1                                                | F2                                                | F3                                                | F4                                                | F5                                                |
       | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- |
-      | <img src = "hw2-2_output/fisherface-0.png"> | <img src = "hw2-2_output/fisherface-1.png"> | <img src = "hw2-2_output/fisherface-2.png"> | <img src = "hw2-2_output/fisherface-3.png"> | <img src = "hw2-2_output/fisherface-4.png"> |
+      | <img src="hw2-2_output/fisherface-0.png"> | <img src="hw2-2_output/fisherface-1.png"> | <img src="hw2-2_output/fisherface-2.png"> | <img src="hw2-2_output/fisherface-3.png"> | <img src="hw2-2_output/fisherface-4.png"> |
 
    2. Use t-SNE to visualize the distribution of the projected testing data, which has the dimension of 30.
 
-      <img src = "hw2-2_output/LDA-scattering.png" width="500px">
+      <img src="hw2-2_output/LDA-scattering.png" width="500px">
 
 #### 3. KNN
 
@@ -85,7 +87,7 @@
 
     LDA的validation非常奇怪，正確率高到不太合理，我想了非常久，才發現應該是因為我們已經拿valid那塊data去作lda了，因此在validation時會有overfit的狀況發生。
 
-       這組參數若選擇正確率最高的(3, 1), (10, 1), (39, 1)的話，在testing的結果很可能壞掉。
+    這組參數若選擇正確率最高的(3, 1), (10, 1), (39, 1)的話，在testing的結果很可能壞掉。
 
     | n\k  |                         1                          |                         3                          |                         5                          |
     | :--: | :------------------------------------------------: | :------------------------------------------------: | :------------------------------------------------: |
@@ -96,6 +98,10 @@
 
 
 3. **Observation**: 直覺來講lda因為有考慮進去分群的概念，testing set上的acc應當要比較高，但在我的實驗中，沒有這個現象，可能原因推測是訓練資料不夠多，不足以fit出一個好的lda
+
+
+
+<div style="page-break-after: always;"></div> 
 
 ## Problem3
 
@@ -128,3 +134,34 @@
    | <img src="hw2-3_output/Low-Level-Features.png" /> | <img src="hw2-3_output/High-Level-Features.png" /> |
 
    由上圖比較可發現，在high-level時資料分群效果明顯比low-level好很多，原因是越到後層，input的feature更被彰顯出來，將資料分的更開。
+
+<div style="page-break-after: always;"></div> 
+
+### Execution
+
+- hw2-2
+
+  ```bash
+  python3 hw2-2_pca.py $1 $2 $3
+  # $1: path of whole dataset
+  # $2: path of the input testing image
+  # $3: path of the output testing image reconstruct by all eigenfaces
+  # E.g., python3 hw2-2_pca.py ./hw2/hw2-2_data ./hw2/test_image.png ./output_pca.png
+  python3 hw2-2_lda.py $1 $2
+  # $1: path of whole dataset
+  # $2: path of the first 1 Fisherface
+  # E.g., python3 hw2-2_lda.py ./hw2/hw2-2_data ./output_fisher.png
+  ```
+
+- hw2-3
+
+  ```bash
+  python3 hw2-3_train.py $1
+  # $1: directory of the hw2-3_data folder
+  # E.g., python3 hw2-3_train.py ./hw2/hw2-3_data/
+  
+  python3 hw2-3_test.py $1 $2
+  # $1: directory of the testing images folder
+  # $2: path of the output prediction file
+  # E.g., python3 hw2-3_test.py ./test_images/ ./output.csv
+  ```

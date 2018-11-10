@@ -1,4 +1,4 @@
-Computer Vision HW2 Report
+# Computer Vision HW2 Report
 
 > B05901011 電機三 許秉倫
 
@@ -41,7 +41,7 @@ Computer Vision HW2 Report
 
 3. Reduce the dimension of the image in testing set to dim = 100. Use t-SNE to visualize the distribution of test images.
 
-<img src = "hw2-2/hw2-2_output/pca-scattering.png" width="500px">
+<img src = "hw2-2/hw2-2_output/PCA-scattering.png" width="500px">
 
 #### 2. LDA
 

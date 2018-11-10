@@ -1,0 +1,27 @@
+Execution for HW2-2
+• TAs will run your code in the following manner.
+• python3 hw2-2_pca.py $1 $2 $3
+• $1: path of whole dataset
+• $2: path of the input testing image
+• $3: path of the output testing image reconstruct by all eigenfaces
+• E.g., python3 hw2-2_pca.py ./hw2/hw2-2_data ./hw2/test_image.png ./output_pca.png
+• python3 hw2-2_lda.py $1 $2
+• $1: path of whole dataset
+• $2: path of the first 1 Fisherface
+• E.g., python3 hw2-3_lda.py ./hw2/hw2-2_data ./output_fisher.png
+
+Execution for HW2-3
+• TAs will run your code in the following manner.
+• python3 hw2-3_train.py $1
+• $1: directory of the hw2-3_data folder
+• E.g., python3 hw2-3_train.py ./hw2/hw2-3_data/
+• TAs will run your code in the following manner.
+• python3 hw2-3_test.py $1 $2
+• $1: directory of the testing images folder
+• $2: path of the output prediction file
+• E.g., python3 hw2-3_test.py ./test_images/ ./output.csv
+• Testing images folder include images named:
+• 0000.png , 0002.png , ... , 9999.png
+• Output prediction file format • In csv format
+• First row: “id,label”
+• From second row: “<image_id>,<predicted_label>”

@@ -13,7 +13,7 @@ class Model:
       N = imgs.shape[0]
       self.pcas = e_vecs[:, 0 : N - 1] # 0 ~ N-2, 2576 X N - 1
       return self.pcas
-   def fit_LDA(self, imgs, labels):
+   def fit_LDA(self, imgs):
       pcas = self.pcas
       g_item, g_num = 7, 40
       # Slice pcas to N - C

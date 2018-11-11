@@ -34,12 +34,12 @@
 
 2. Take 𝒑𝒆𝒓𝒔𝒐𝒏8_ 𝒊𝒎𝒂𝒈𝒆6, and project it onto the above PCA eigenspace. Reconstruct this image using the first n = { 5, 50, 150, all } eigenfaces. For each n, compute the mean square error (MSE) between the reconstructed face image and the original 𝒑𝒆𝒓𝒔𝒐𝒏8_ 𝒊𝒎𝒂𝒈𝒆6. Plot these reconstructed images with the corresponding MSE values in the report.
 
-   | n    | MSE   | Reconstructed                                  |
-   | ---- | ----- | ---------------------------------------------- |
+   | n    | MSE   | Reconstructed                          |
+   | ---- | ----- | -------------------------------------- |
    | 5    | 693.7 | <img src="hw2-2_output/8_6-n=5.png">   |
    | 50   | 119.2 | <img src="hw2-2_output/8_6-n=50.png">  |
    | 150  | 40.40 | <img src="hw2-2_output/8_6-n=150.png"> |
-   | 279  | 8.42  | <img src="hw2-2_output/8_6-n=279.png"> |
+   | 279  | 0     | <img src="hw2-2_output/8_6-n=279.png"> |
 
 3. Reduce the dimension of the image in testing set to dim = 100. Use t-SNE to visualize the distribution of test images.
 

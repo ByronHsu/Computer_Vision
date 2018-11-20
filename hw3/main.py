@@ -1,59 +1,78 @@
+import os
 import numpy as np
 import cv2
 
 
-# u, v are N-by-2 matrices, representing N corresponding points for v = T(u)
-# this function should return a 3-by-3 homography matrix
-def solve_homography(u, v):
-    N = u.shape[0]
-    if v.shape[0] is not N:
-        print('u and v should have the same size')
-        return None
-    if N < 4:
-        print('At least 4 points should be given')
-    A = np.zeros((2*N, 8))
-	# if you take solution 2:
-	# A = np.zeros((2*N, 9))
-    b = np.zeros((2*N, 1))
-    H = np.zeros((3, 3))
-    # TODO: compute H from A and b
-    return H
+# transform point to 2 x 9 (part of A)
+# u: point on img, v: point on canvas
+# return list
+def point_to_vec(u, v):
+   vecs = [
+      [u[0], u[1], 1, 0, 0, 0, -u[0] * v[0], -u[1] * v[0], -v[0]],
+      [0, 0, 0, u[0], u[1], 1, -u[0] * v[1], -u[1] * v[1], -v[1]]
+   ]
+   return vecs
 
+class Homography:
+   def __init__(self):
+      pass
+   
+   def read_file(self):
+      canvas_name = 'times_square.jpg'
+      imgs_name = ['wu.jpg', 'ding.jpg', 'yao.jpg', 'kp.jpg', 'lee.jpg']
+      canvas_corners = [
+         np.array([[352, 818], [407, 818], [352, 884], [408, 885]]),
+         np.array([[14, 311], [152, 157], [150, 402], [315, 278]]),
+         np.array([[674, 364], [864, 279], [725, 430], [885, 369]]),
+         np.array([[495, 808], [609, 802], [495, 892], [609, 896]]),
+         np.array([[608, 1024], [664, 1032], [593, 1118], [651, 1134]])
+      ]
+      imgs_corners = []
+      canvas = cv2.imread(os.path.join('input', canvas_name))
+      imgs = []
+      for i in range(5):
+         img = cv2.imread(os.path.join('input', imgs_name[i]))
+         corner = np.array([[0, 0], [img.shape[0], 0], [0, img.shape[1]], [img.shape[0], img.shape[1]]])
+         imgs.append(img)
+         imgs_corners.append(corner)
+      self.canvas, self.imgs, self.canvas_corners, self.imgs_corners = canvas, imgs, canvas_corners, imgs_corners
+   
+   def solve_homography(self, k): # 第k張圖
+      A = []
+      for i in range(4):
+         t = point_to_vec(self.imgs_corners[k][i], self.canvas_corners[k][i])
+         A.append(t[0])
+         A.append(t[1])
+      A = np.array(A)
+      u, s, vh = np.linalg.svd(A.transpose() @ A, full_matrices = False)
+      Fn = u[:, 8].reshape(3, 3)
+      H, W = self.imgs[k].shape[0], self.imgs[k].shape[1]
+      
+      pos_list = []
+      for i in range(H):
+         pos_list.append([])
+         for j in range(W):
+            pos_list[i].append([i, j, 1])
+      X = np.array(pos_list)
+      X = X.reshape(-1, 3)
 
-# corners are 4-by-2 arrays, representing the four image corner (x, y) pairs
-def transform(img, canvas, corners):
-    h, w, ch = img.shape
-    # TODO: some magic
+      Y = X @ Fn.transpose()
+      Expand = (1 / Y[:, 2]).reshape(-1, 1)
+      Y = Y * Expand # 讓第三維變為1
+      Y = Y.astype(np.int_) # 取x y座標 忽略第三維
+      rows = Y[:, 0]
+      cols = Y[:, 1]
+      canvas = self.canvas
+      canvas[rows, cols] = self.imgs[k].reshape(-1, 3)
+      self.canvas = canvas
 
 
 def main():
-    # Part 1
-    canvas = cv2.imread('./input/times_square.jpg')
-    img1 = cv2.imread('./input/wu.jpg')
-    img2 = cv2.imread('./input/ding.jpg')
-    img3 = cv2.imread('./input/yao.jpg')
-    img4 = cv2.imread('./input/kp.jpg')
-    img5 = cv2.imread('./input/lee.jpg')
-
-    corners1 = np.array([[818, 352], [884, 352], [818, 407], [885, 408]])
-    corners2 = np.array([[311, 14], [402, 150], [157, 152], [278, 315]])
-    corners3 = np.array([[364, 674], [430, 725], [279, 864], [369, 885]])
-    corners4 = np.array([[808, 495], [892, 495], [802, 609], [896, 609]])
-    corners5 = np.array([[1024, 608], [1118, 593], [1032, 664], [1134, 651]])
-
-    # TODO: some magic
-    cv2.imwrite('part1.png', canvas)
-
-    # Part 2
-    img = cv2.imread('./input/screen.jpg')
-    # TODO: some magic
-    # cv2.imwrite('part2.png', output2)
-
-    # Part 3
-    img_front = cv2.imread('./input/crosswalk_front.jpg')
-    # TODO: some magic
-    # cv2.imwrite('part3.png', output3)
-
+   H = Homography()
+   H.read_file()
+   for i in range(5):
+      H.solve_homography(i)
+   cv2.imwrite(os.path.join('output', 'part1.png'), H.canvas)
 
 if __name__ == '__main__':
-    main()
+   main()

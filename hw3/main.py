@@ -104,7 +104,7 @@ def qr_code():
 def top_view():
    canvas = np.zeros((500, 800, 3), dtype = np.int_)
    img = cv2.imread(os.path.join('input', 'crosswalk_front.jpg'))
-   img_corners = [[144, 146], [286, 0], [140, 575], [286, 725]]
+   img_corners = [[143, 145], [286, 0], [140, 575], [286, 725]]
    canvas_corners = [[0, 0], [500, 0], [0, 800], [500, 800]]
    transform_inv(img, canvas, canvas_corners, img_corners)
    cv2.imwrite(os.path.join('output', 'part3.png'), canvas)

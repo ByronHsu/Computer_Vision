@@ -64,13 +64,13 @@ def transform(img, canvas, corners):
    canvas[rows, cols] = img
 
 
-def apply_homography():
+def time_square():
    canvas, imgs, canvas_corners = read_file()
    for i in range(len(imgs)):
       transform(imgs[i], canvas, canvas_corners[i])
    cv2.imwrite(os.path.join('output', 'part1.png'), canvas)
 
-def transform2(img, canvas, canvas_corners, img_corners):
+def transform_inv(img, canvas, canvas_corners, img_corners):
    Fn = solve_homography(img_corners, canvas_corners)
    Fn_i = np.linalg.inv(Fn) # inverse
 
@@ -93,19 +93,29 @@ def transform2(img, canvas, canvas_corners, img_corners):
 
    canvas[:] = img[rows, cols]
 
-def part2():
+def qr_code():
    canvas = np.zeros((500, 500, 3), dtype = np.int_)
    img = cv2.imread(os.path.join('input', 'screen.jpg'))
    img_corners = [[368, 1040], [550, 977], [400, 1100], [600, 1040]]
    canvas_corners = [[0, 0], [500, 0], [0, 500], [500, 500]]
-   transform2(img, canvas, canvas_corners, img_corners)
+   transform_inv(img, canvas, canvas_corners, img_corners)
    cv2.imwrite(os.path.join('output', 'part2.png'), canvas)
+
+def top_view():
+   canvas = np.zeros((500, 800, 3), dtype = np.int_)
+   img = cv2.imread(os.path.join('input', 'crosswalk_front.jpg'))
+   img_corners = [[144, 146], [286, 0], [140, 575], [286, 725]]
+   canvas_corners = [[0, 0], [500, 0], [0, 800], [500, 800]]
+   transform_inv(img, canvas, canvas_corners, img_corners)
+   cv2.imwrite(os.path.join('output', 'part3.png'), canvas)
 
 def main():
    # part 1
-   # apply_homography()
+   # time_square()
    # part 2
-   part2()
+   # qr_code()
+   # part 3
+   top_view()
 
 if __name__ == '__main__':
    main()

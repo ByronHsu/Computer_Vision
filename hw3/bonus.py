@@ -51,7 +51,7 @@ cap = cv2.VideoCapture(os.path.join('bonus_input', 'ar_marker.mp4'))
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 W, H = 1280, 720
 
-out = cv2.VideoWriter(os.path.join('output', 'output.mp4'), fourcc, 20.0, (W, H)) # origin 3840 2160
+out = cv2.VideoWriter(os.path.join('output', 'bonus.mp4'), fourcc, 20.0, (W, H)) # origin 3840 2160
 img_object = cv2.imread(os.path.join('bonus_input', 'marker.png'))
 img_object = img_object[40:370, 40:370]
 img_source = cv2.imread(os.path.join('bonus_input', 'source.jpg'))

@@ -1,0 +1,1 @@
+ffmpeg -i bonus.mp4 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > bonus.gif

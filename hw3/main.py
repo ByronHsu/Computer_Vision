@@ -111,9 +111,9 @@ def top_view():
 
 def main():
    # part 1
-   # time_square()
+   time_square()
    # part 2
-   # qr_code()
+   qr_code()
    # part 3
    top_view()
 

@@ -44,8 +44,6 @@ def solve_homography(u, v):
 
 We **cannot** get parallel bars from top view.
 
-
-
 <img src="assets/part3_edit.jpg" width="500px">
 
 仔細把平行線畫出來後，觀察淺藍色的線，可發現除了最左邊的bar以外都可以完美的服貼在線上，最左邊的bar有一個小小的陷落。
@@ -61,8 +59,18 @@ We **cannot** get parallel bars from top view.
   4. 將矩陣apply到marker的四個頂點上，即可得到在frame上的頂點
   5. 接下來就使用part1的方法投影，算出自定圖與frame頂點間的H'
   6. 將自訂圖透過H'投到frame上
-- Reference
-  - https://docs.opencv.org/3.4/d7/dff/tutorial_feature_homography.html?fbclid=IwAR0-1FwtXHLus00_9rKC1ScG1tvN-VGo7rDxNg1ZGf0IC9DPyB1ZOhkKQio
-- Demo
 
-<img src="output/bonus.gif"/>
+
+
+  但僅僅照上述演算法實作是不夠的，從自定圖投影過去會有缺漏點的問題
+
+  如part2，必須用inverse的作法，但由於canvas上的頂點是不規則狀，因此我們必須找到能包住他的最小長方形，再一一投影回去，而若該點投會去不存在，則不update，如附圖
+
+  <img src="assets/homo.png"/>
+
+- Reference
+
+  - https://docs.opencv.org/3.4/d7/dff/tutorial_feature_homography.html?fbclid=IwAR0-1FwtXHLus00_9rKC1ScG1tvN-VGo7rDxNg1ZGf0IC9DPyB1ZOhkKQio
+
+- Demo
+  <img src="output/bonus.gif"/>

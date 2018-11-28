@@ -73,4 +73,5 @@ We **cannot** get parallel bars from top view.
   - https://docs.opencv.org/3.4/d7/dff/tutorial_feature_homography.html?fbclid=IwAR0-1FwtXHLus00_9rKC1ScG1tvN-VGo7rDxNg1ZGf0IC9DPyB1ZOhkKQio
 
 - Demo
-  <img src="output/bonus.gif"/>
+
+<img src="output/bonus.gif"/>

@@ -1,0 +1,1 @@
+python3 test.py testdata/tsukuba/im3.png testdata/tsukuba/im4.png tsukuba.png 15 16

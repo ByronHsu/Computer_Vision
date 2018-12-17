@@ -24,8 +24,8 @@ class BSM():
         self.patch_size = 26
         self.des_len = 4096
         self.std = 4
-        self.max_disp = 60
-        self.scale_factor = 4
+        self.max_disp = max_disp
+        self.scale_factor = scale_factor
     def setPairDistr(self):
         # 4096 x 2
         p_samples = np.zeros((self.des_len, 2), dtype = np.float_)
@@ -58,10 +58,13 @@ class BSM():
                         if count < ham_dis:
                             disparity = d
                             ham_dis = count
-                print(r, c, disparity)
+                #print(r, c, disparity)
                 disparity_map[r, c] = disparity * self.scale_factor
-                cv2.imwrite(OUTPUT_PATH, disparity_map)
-        print(disparity_map)
+            print(r)
+
+        cv2.imwrite(OUTPUT_PATH, disparity_map)
+        print('writing {}'.format(OUTPUT_PATH))
+        #print(disparity_map)
 
     def _findbinstring(self, r_offset, c_offset, img):
         pad = self.patch_size // 2

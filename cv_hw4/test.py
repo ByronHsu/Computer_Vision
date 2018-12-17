@@ -9,8 +9,6 @@ OUTPUT_PATH = sys.argv[3]
 MAX_DISP = int(sys.argv[4])
 SCALE_FACTOR = int(sys.argv[5])
 
-img_left = cv2.imread(IMG_LEFT_PATH, 0)
-img_right = cv2.imread(IMG_RIGHT_PATH, 0)
 
 # plt.figure()
 # plt.subplot(1, 2, 1)
@@ -31,45 +29,62 @@ class BSM():
         p_samples = np.zeros((self.des_len, 2), dtype = np.float_)
         p_samples[:, 0] = np.random.normal(0, self.std, self.des_len).T
         p_samples[:, 1] = np.random.normal(0, self.std, self.des_len).T
-        self.p_samples = p_samples
-
+        p_samples = np.clip(p_samples.astype(np.int_), -13, 13)
+        
         q_samples = np.zeros((self.des_len, 2), dtype = np.float_)
         q_samples[:, 0] = np.random.normal(0, self.std, self.des_len).T
         q_samples[:, 1] = np.random.normal(0, self.std, self.des_len).T
-        self.q_samples = q_samples
+        q_samples = np.clip(q_samples.astype(np.int_), -13, 13)
 
-        self.p_samples = np.clip(self.p_samples.astype(np.int_), -13, 13)
-        self.q_samples = np.clip(self.q_samples.astype(np.int_), -13, 13)
+        self.p_samples = p_samples
+        self.q_samples = q_samples
         print('finish setting pair distribution')
-    def match(self, i1, i2):
-        self.img_left = i1
-        self.img_right = i2
-        row, col = img_left.shape
+
+    def load_image(self, l_path, r_path):
+        self.img_left = cv2.imread(l_path, 0)
+        self.img_right = cv2.imread(r_path, 0)
+        self.row, self.col = self.img_left.shape
+    def match(self):
+        self._preprocess()
+        row, col = self.row, self.col
         disparity_map = np.zeros((row, col), dtype = np.int_)
         for r in range(row):
             for c in range(col):
-                source_bits = self._findbinstring(r, c, self.img_left)
+                source_bits = self.left_bstrs[r, c]
                 ham_dis = 1e9 # initialize
                 disparity = None
                 for d in range(self.max_disp):
                     if c - d >= 0: 
-                        target_bits = self._findbinstring(r, c - d, self.img_right)
+                        target_bits = self.right_bstrs[r, c - d]
                         count = np.count_nonzero(source_bits ^ target_bits)
                         if count < ham_dis:
                             disparity = d
                             ham_dis = count
-                #print(r, c, disparity)
                 disparity_map[r, c] = disparity * self.scale_factor
-            print(r)
+            cv2.imwrite(OUTPUT_PATH, disparity_map)
+            print('match', r)
 
         cv2.imwrite(OUTPUT_PATH, disparity_map)
         print('writing {}'.format(OUTPUT_PATH))
-        #print(disparity_map)
+    def _preprocess(self):
 
-    def _findbinstring(self, r_offset, c_offset, img):
+        row, col = self.row, self.col
+        left_bstrs = np.zeros((row, col, self.des_len), dtype = np.bool_)
+        right_bstrs = np.zeros((row, col, self.des_len), dtype = np.bool_)
+
+        img_left_pad = np.pad(self.img_left, (self.patch_size // 2, self.patch_size // 2), 'constant', constant_values=(0, 0))
+        img_right_pad = np.pad(self.img_right, (self.patch_size // 2, self.patch_size // 2), 'constant', constant_values=(0, 0))
+
+        for r in range(row):
+            for c in range(col):
+                left_bstrs[r, c] = self._findbinstring(r, c, img_left_pad)
+                right_bstrs[r, c] = self._findbinstring(r, c, img_right_pad)
+            print('_preprocess', r)
+        self.left_bstrs = left_bstrs
+        self.right_bstrs = right_bstrs
+
+    def _findbinstring(self, r_offset, c_offset, image_pad):
         pad = self.patch_size // 2
-        image_pad = np.pad(img, (self.patch_size // 2, self.patch_size // 2), 'constant', constant_values=(0, 0))
-
         p_r = self.p_samples[:, 0] + r_offset + pad
         p_c = self.p_samples[:, 1] + c_offset + pad
         q_r = self.q_samples[:, 0] + r_offset + pad
@@ -80,4 +95,5 @@ class BSM():
 if __name__ == '__main__':
     a = BSM(MAX_DISP, SCALE_FACTOR)
     a.setPairDistr()
-    a.match(img_left, img_right)
+    a.load_image(IMG_LEFT_PATH, IMG_RIGHT_PATH)
+    a.match()

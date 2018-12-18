@@ -44,10 +44,13 @@ class BSM():
         self.img_left = cv2.imread(l_path, 0)
         self.img_right = cv2.imread(r_path, 0)
         self.row, self.col = self.img_left.shape
-    def match(self):
+
+    def match_costing(self):
         self._preprocess()
         row, col = self.row, self.col
-        disparity_map = np.zeros((row, col), dtype = np.int_)
+        self.left_disparity_map = np.zeros((row, col), dtype = np.int_)
+        
+        # LEFT
         for r in range(row):
             for c in range(col):
                 source_bits = self.left_bstrs[r, c]
@@ -60,14 +63,89 @@ class BSM():
                         if count < ham_dis:
                             disparity = d
                             ham_dis = count
-                disparity_map[r, c] = disparity * self.scale_factor
-            cv2.imwrite(OUTPUT_PATH, disparity_map)
-            print('match', r)
+                self.left_disparity_map[r, c] = disparity * self.scale_factor
+            print('matching_cost left', r)
 
-        cv2.imwrite(OUTPUT_PATH, disparity_map)
-        print('writing {}'.format(OUTPUT_PATH))
+            cv2.imwrite('output/cones-left.png', self.left_disparity_map)
+
+        # RIGHT
+        self.right_disparity_map = np.zeros((row, col), dtype = np.int_)
+        for r in range(row):
+            for c in range(col):
+                source_bits = self.right_bstrs[r, c]
+                ham_dis = 1e9 # initialize
+                disparity = None
+                for d in range(self.max_disp):
+                    if c + d < col: 
+                        target_bits = self.left_bstrs[r, c + d]
+                        count = np.count_nonzero(source_bits ^ target_bits)
+                        if count < ham_dis:
+                            disparity = d
+                            ham_dis = count
+                self.right_disparity_map[r, c] = disparity * self.scale_factor
+            print('matching_cost right', r)
+
+        cv2.imwrite('output/cones-right.png', self.right_disparity_map)
+
+    def skip_cost(self):
+        
+        self.left_disparity_map = cv2.imread('output/cones-left.png', 0)
+        self.right_disparity_map = cv2.imread('output/cones-right.png', 0)
+
+    def refine(self):
+        row, col = self.row, self.col
+        valid_map = np.zeros((row, col), dtype = np.bool_)
+        left_disp = self.left_disparity_map.astype(np.int_) // self.scale_factor
+        right_disp = self.right_disparity_map.astype(np.int_) // self.scale_factor
+
+        new_disp = left_disp.copy()
+        for r in range(row):
+            for c in range(col):
+                match_r, match_c = (r, c - left_disp[r, c])        
+                if match_c < 0:
+                    valid_map[r, c] = False
+                else:
+                    r_disp = right_disp[match_r, match_c]
+                    l_disp = left_disp[r, c]
+                    if abs(r_disp - l_disp) > 1:
+                        valid_map[r, c] = False
+                    else:
+                        valid_map[r, c] = True
+
+        r_axis = np.tile(range(col), (row, 1))
+        c_axis = np.tile(range(row), (col, 1)).T
+
+        LDc, LDe = 9, 16
+
+        for r in range(row):
+            for c in range(col):
+                if valid_map[r, c] == False:
+                    weight_max = 1e-32 # initialize
+                    disparity = None
+                    for d in range(self.max_disp):
+                        index = (valid_map == True) & (left_disp == d)
+                        r_fit = r_axis[index]
+                        c_fit = c_axis[index]
+                        img_fit = self.img_left[index]
+                        space_dis = np.sqrt ((r_fit - r) ** 2 + (c_fit - c) ** 2)
+                        color_dis = np.sqrt ((img_fit - self.img_left[r, c]) ** 2)
+                        exp_index = - space_dis / LDc - color_dis / LDe
+                        weight_arr = np.exp(exp_index)
+                        weight_sum = np.sum(weight_arr)
+                        print(d, r_fit.shape)
+                        # print(exp_index)
+                        # print(weight_arr)
+                        print(weight_sum)
+                        # input()
+                        if weight_sum > weight_max:
+                            disparity = d
+                            weight_max = weight_sum 
+                    new_disp[r, c] = disparity
+            cv2.imwrite('refine.png', new_disp * self.scale_factor)
+            print(r)
+                    
+
     def _preprocess(self):
-
         row, col = self.row, self.col
         left_bstrs = np.zeros((row, col, self.des_len), dtype = np.bool_)
         right_bstrs = np.zeros((row, col, self.des_len), dtype = np.bool_)
@@ -96,4 +174,6 @@ if __name__ == '__main__':
     a = BSM(MAX_DISP, SCALE_FACTOR)
     a.setPairDistr()
     a.load_image(IMG_LEFT_PATH, IMG_RIGHT_PATH)
-    a.match()
+    # a.match_costing()
+    a.skip_cost()
+    a.refine()

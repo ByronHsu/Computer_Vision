@@ -14,7 +14,7 @@ np.set_printoptions(edgeitems = 5)
 class BSM():
     def __init__(self, max_disp, scale_factor):
         self.patch_size = 26
-        self.des_len = 4096
+        self.des_len = 8192
         self.std = 4
         self.max_disp = max_disp
         self.scale_factor = scale_factor

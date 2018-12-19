@@ -98,7 +98,7 @@ class BSM():
 
     def refine_median(self):
         left_disp = self.left_disparity_map.astype(np.uint8)
-        kernal_size = 11
+        kernal_size = 7
         left_disp = cv2.medianBlur(left_disp, kernal_size)
         left_disp = cv2.bilateralFilter(left_disp, 10, 9, 16)
         cv2.imwrite('{}.png'.format(NAME), left_disp)
@@ -130,44 +130,23 @@ class BSM():
         c_axis = np.tile(range(row), (col, 1)).T
 
         LDc, LDe = 9, 16
-
+        refine_threshold = self.max_disp // 6
         for r in range(row):
             for c in range(col):
                 if valid_map[r, c] == False:
-
                     disparity = 1e5
                     for k in range(col):
                         if c - k < 0:
                             break
-                        elif valid_map[r, c - k] == True:
+                        elif valid_map[r, c - k] == True and left_disp[r, c - k] > refine_threshold:
                             disparity = min(disparity, left_disp[r, c - k])
                             break
                     for k in range(col):
                         if c + k >= col:
                             break
-                        elif valid_map[r, c + k] == True:
+                        elif valid_map[r, c + k] == True and left_disp[r, c + k] > refine_threshold:
                             disparity = min(disparity, left_disp[r, c + k])
                             break
-                    """
-                    weight_max = 1e-32 # initialize
-                    disparity = 0
-                    for d in range(self.max_disp):
-                        radius = np.sqrt((r_axis - r) ** 2 + (c_axis - c) ** 2)
-                        index = (valid_map == True) & (left_disp == d) & (radius < 30)
-                        r_fit = r_axis[index]
-                        c_fit = c_axis[index]
-                        img_fit = self.img_left_gray[index]
-                        # img_fit = self.img_left_bgr[index, :]
-                        space_dis = np.sqrt ((r_fit - r) ** 2 + (c_fit - c) ** 2)
-                        color_dis = np.sqrt ((img_fit - self.img_left_gray[r, c]) ** 2)
-                        # color_dis = np.sqrt (np.sum((img_fit - self.img_left_bgr[r, c].reshape(1, 3)) ** 2 , axis = 1))
-                        exp_index = - space_dis / LDc - color_dis / LDe
-                        weight_arr = np.exp(exp_index)
-                        weight_sum = np.sum(weight_arr)
-                        if weight_sum > weight_max:
-                            disparity = d
-                            weight_max = weight_sum 
-                    """
                     new_disp[r, c] = disparity
             cv2.imwrite('output/{}.png'.format(NAME), new_disp * self.scale_factor)
             print(r)

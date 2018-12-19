@@ -5,17 +5,9 @@ import sys
 
 IMG_LEFT_PATH = sys.argv[1]
 IMG_RIGHT_PATH = sys.argv[2]
-OUTPUT_PATH = sys.argv[3]
+NAME = sys.argv[3]
 MAX_DISP = int(sys.argv[4])
 SCALE_FACTOR = int(sys.argv[5])
-
-
-# plt.figure()
-# plt.subplot(1, 2, 1)
-# plt.imshow(img_left, cmap='gray')
-# plt.subplot(1, 2, 2)
-# plt.imshow(img_right, cmap='gray')
-# plt.show()
 
 np.set_printoptions(edgeitems = 5)
 
@@ -73,13 +65,13 @@ class BSM():
                     if c - d >= 0: 
                         target_bits = self.right_bstrs[r, c - d]
                         count = np.count_nonzero(source_bits ^ target_bits & mask_bits)
+                        # count = np.count_nonzero(source_bits ^ target_bits)
                         if count < ham_dis:
                             disparity = d
                             ham_dis = count
                 self.left_disparity_map[r, c] = disparity * self.scale_factor
             print('matching_cost left', r)
-            cv2.imwrite('output/cones-left.png', self.left_disparity_map)
-            # cv2.imwrite('output/tsukuba-left.png', self.left_disparity_map)
+            cv2.imwrite('output/{}-left.png'.format(NAME), self.left_disparity_map)
         # RIGHT
         self.right_disparity_map = np.zeros((row, col), dtype = np.int_)
         for r in range(row):
@@ -92,26 +84,24 @@ class BSM():
                     if c + d < col: 
                         target_bits = self.left_bstrs[r, c + d]
                         count = np.count_nonzero(source_bits ^ target_bits & mask_bits)
+                        # count = np.count_nonzero(source_bits ^ target_bits)
                         if count < ham_dis:
                             disparity = d
                             ham_dis = count
                 self.right_disparity_map[r, c] = disparity * self.scale_factor
             print('matching_cost right', r)
-            cv2.imwrite('output/cones-right.png', self.right_disparity_map)
-            # cv2.imwrite('output/tsukuba-right.png', self.right_disparity_map)
+            cv2.imwrite('output/{}-right.png'.format(NAME), self.right_disparity_map)
         
     def skip_cost(self):
-
-        self.left_disparity_map = cv2.imread('output/cones-left.png', 0)
-        # self.left_disparity_map = cv2.imread('output/tsukuba-left.png', 0)
-        self.right_disparity_map = cv2.imread('output/cones-right.png', 0)
-        # self.right_disparity_map = cv2.imread('output/tsukuba-right.png', 0)
+        self.left_disparity_map = cv2.imread('output/{}-left.png'.format(NAME), 0)
+        self.right_disparity_map = cv2.imread('output/{}-right.png'.format(NAME), 0)
 
     def refine_median(self):
-        left_disp = self.left_disparity_map.astype(np.int_)
-        kernal_size = 51
-        new_disp = cv2.medianBlur(left_disp, kernal_size)
-        cv2.imwrite(OUTPUT_PATH, new_disp)
+        left_disp = self.left_disparity_map.astype(np.uint8)
+        kernal_size = 11
+        left_disp = cv2.medianBlur(left_disp, kernal_size)
+        left_disp = cv2.bilateralFilter(left_disp, 10, 9, 16)
+        cv2.imwrite('{}.png'.format(NAME), left_disp)
 
     def refine_BSM(self):
         row, col = self.row, self.col
@@ -179,8 +169,9 @@ class BSM():
                             weight_max = weight_sum 
                     """
                     new_disp[r, c] = disparity
-            cv2.imwrite(OUTPUT_PATH, new_disp * self.scale_factor)
+            cv2.imwrite('output/{}.png'.format(NAME), new_disp * self.scale_factor)
             print(r)
+        self.left_disparity_map = new_disp * self.scale_factor
                     
 
     def _preprocess(self):
@@ -241,4 +232,5 @@ if __name__ == '__main__':
     a.load_image(IMG_LEFT_PATH, IMG_RIGHT_PATH)
     # a.match_costing()
     a.skip_cost()
-    a.refine()
+    a.refine_BSM()
+    a.refine_median()

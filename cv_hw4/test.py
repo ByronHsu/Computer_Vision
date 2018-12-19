@@ -78,8 +78,8 @@ class BSM():
                             ham_dis = count
                 self.left_disparity_map[r, c] = disparity * self.scale_factor
             print('matching_cost left', r)
-            # cv2.imwrite('output/cones-left.png', self.left_disparity_map)
-        
+            cv2.imwrite('output/cones-left.png', self.left_disparity_map)
+            # cv2.imwrite('output/tsukuba-left.png', self.left_disparity_map)
         # RIGHT
         self.right_disparity_map = np.zeros((row, col), dtype = np.int_)
         for r in range(row):
@@ -97,14 +97,23 @@ class BSM():
                             ham_dis = count
                 self.right_disparity_map[r, c] = disparity * self.scale_factor
             print('matching_cost right', r)
-            # cv2.imwrite('output/cones-right.png', self.right_disparity_map)
+            cv2.imwrite('output/cones-right.png', self.right_disparity_map)
+            # cv2.imwrite('output/tsukuba-right.png', self.right_disparity_map)
         
     def skip_cost(self):
 
         self.left_disparity_map = cv2.imread('output/cones-left.png', 0)
+        # self.left_disparity_map = cv2.imread('output/tsukuba-left.png', 0)
         self.right_disparity_map = cv2.imread('output/cones-right.png', 0)
+        # self.right_disparity_map = cv2.imread('output/tsukuba-right.png', 0)
 
-    def refine(self):
+    def refine_median(self):
+        left_disp = self.left_disparity_map.astype(np.int_)
+        kernal_size = 51
+        new_disp = cv2.medianBlur(left_disp, kernal_size)
+        cv2.imwrite(OUTPUT_PATH, new_disp)
+
+    def refine_BSM(self):
         row, col = self.row, self.col
         valid_map = np.zeros((row, col), dtype = np.bool_)
         left_disp = self.left_disparity_map.astype(np.int_) // self.scale_factor
@@ -135,6 +144,7 @@ class BSM():
         for r in range(row):
             for c in range(col):
                 if valid_map[r, c] == False:
+
                     disparity = 1e5
                     for k in range(col):
                         if c - k < 0:
@@ -150,9 +160,10 @@ class BSM():
                             break
                     """
                     weight_max = 1e-32 # initialize
-                    disparity = None
+                    disparity = 0
                     for d in range(self.max_disp):
-                        index = (valid_map == True) & (left_disp == d)
+                        radius = np.sqrt((r_axis - r) ** 2 + (c_axis - c) ** 2)
+                        index = (valid_map == True) & (left_disp == d) & (radius < 30)
                         r_fit = r_axis[index]
                         c_fit = c_axis[index]
                         img_fit = self.img_left_gray[index]
@@ -160,7 +171,6 @@ class BSM():
                         space_dis = np.sqrt ((r_fit - r) ** 2 + (c_fit - c) ** 2)
                         color_dis = np.sqrt ((img_fit - self.img_left_gray[r, c]) ** 2)
                         # color_dis = np.sqrt (np.sum((img_fit - self.img_left_bgr[r, c].reshape(1, 3)) ** 2 , axis = 1))
-
                         exp_index = - space_dis / LDc - color_dis / LDe
                         weight_arr = np.exp(exp_index)
                         weight_sum = np.sum(weight_arr)
@@ -229,6 +239,6 @@ if __name__ == '__main__':
     a = BSM(MAX_DISP, SCALE_FACTOR)
     a.setPairDistr()
     a.load_image(IMG_LEFT_PATH, IMG_RIGHT_PATH)
-    a.match_costing()
-    #a.skip_cost()
+    # a.match_costing()
+    a.skip_cost()
     a.refine()

@@ -1,1 +1,0 @@
-python3 test.py testdata/venus/im2.png testdata/venus/im6.png venus.png 20 8

@@ -1,1 +1,0 @@
-python3 test.py testdata/teddy/im2.png testdata/teddy/im6.png teddy.png 60 4

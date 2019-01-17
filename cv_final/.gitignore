@@ -1,2 +1,6 @@
 paper/
 *.pt
+*.tar
+*.meta
+*.index
+*.data*

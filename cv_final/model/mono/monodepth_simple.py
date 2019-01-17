@@ -39,7 +39,7 @@ full_path = os.path.realpath(__file__)
 folder, _ = os.path.split(full_path)
 
 encoder = 'vgg'
-checkpoint_path = os.path.join(folder, 'checkpoints', 'model-2')
+checkpoint_path = os.path.join(folder, 'checkpoints', 'model-200')
 input_height, input_width = 256, 512
 
 params = monodepth_parameters(
@@ -75,7 +75,6 @@ def evaluate(input_image):
 
     # input_image = scipy.misc.imread(args.image_path, mode="RGB")
     original_height, original_width, num_channels = input_image.shape
-    print(original_height, original_width)
     input_image = scipy.misc.imresize(input_image, [input_height, input_width], interp='lanczos')
     input_image = input_image.astype(np.float32) / 255
     input_images = np.stack((input_image, np.fliplr(input_image)), 0)
@@ -99,17 +98,18 @@ def evaluate(input_image):
 
     disp = sess.run(model.disp_left_est[0], feed_dict={left: input_images})
     disp_pp = post_process_disparity(disp.squeeze()).astype(np.float32)
-
+    
+    factor = 0.9
+    disp_pp = np.clip(disp_pp, 0, np.max(disp_pp) * factor)[10: -10, 10:-10]
+    
     # output_directory = os.path.dirname(args.image_path)
     # output_name = os.path.splitext(os.path.basename(args.image_path))[0]
-    output_name = 'a'
     # np.save(os.path.join("{}_disp.npy".format(output_name)), disp_pp)
     disp_to_img = scipy.misc.imresize(disp_pp.squeeze(), [original_height, original_width])
     # plt.imsave(os.path.join("{}_disp.png".format(output_name)), disp_to_img, cmap='jet')
 
     return cv2.resize(disp_pp, (original_width, original_height))
 
-    print('done!')
 
 # def main(_):
 

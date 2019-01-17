@@ -14,7 +14,7 @@ parser.add_argument('--output', default='./TL0.pfm', type=str, help='left dispar
 
 # You can modify the function interface as you like
 def computeDisp(l_path, r_path):
-    model.evaluate(l_path, r_path)
+    return model.evaluate(l_path, r_path)
 
 
 def main():
@@ -26,10 +26,11 @@ def main():
     # disp = computeDisp(img_left, img_right)
     disp = computeDisp(args.input_left, args.input_right)
     toc = time.time()
+    print('Elapsed time: %f sec.' % (toc - tic))
+    
     writePFM(args.output, disp)
     plt.imsave(args.output.replace('.pfm', '.png'), disp, cmap = 'jet')
     
-    print('Elapsed time: %f sec.' % (toc - tic))
 
 
 if __name__ == '__main__':

@@ -13,18 +13,20 @@ import torch.nn.functional as F
 import numpy as np
 import time
 import math
+import cv2
 from .models import *
 import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 
 full_path = os.path.realpath(__file__)
 folder, _ = os.path.split(full_path)
-
+original_width, original_height = 384, 512
 def evaluate(left, right):
     maxdisp = 64
     __imagenet_stats = {'mean': [0.485, 0.456, 0.406],
                    'std': [0.229, 0.224, 0.225]}
-    
+    left, right = cv2.resize(left, (384, 512)), cv2.resize(right, (384, 512))
+
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize(**__imagenet_stats)])
     img_left = transform(left)
     img_right = transform(right)
@@ -46,5 +48,7 @@ def evaluate(left, right):
 
     output = torch.squeeze(output)
     pred_disp = output.data.cpu().numpy()
-
+    
+    pred_disp = cv2.resize(pred_disp, (384, 512))
+    
     return pred_disp

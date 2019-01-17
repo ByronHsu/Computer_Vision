@@ -24,6 +24,7 @@ def evaluate(left, right):
     maxdisp = 64
     __imagenet_stats = {'mean': [0.485, 0.456, 0.406],
                    'std': [0.229, 0.224, 0.225]}
+    
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize(**__imagenet_stats)])
     img_left = transform(left)
     img_right = transform(right)

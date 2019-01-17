@@ -4,6 +4,7 @@ import cv2
 import time
 from util import writePFM
 import model
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description='Disparity Estimation')
 parser.add_argument('--input-left', default='./data/Synthetic/TL0.png', type=str, help='input left image')
@@ -18,8 +19,6 @@ def computeDisp(l_path, r_path):
 
 def main():
     args = parser.parse_args()
-
-    print(args.output)
     print('Compute disparity for %s' % args.input_left)
     img_left = cv2.imread(args.input_left)
     img_right = cv2.imread(args.input_right)
@@ -27,7 +26,9 @@ def main():
     # disp = computeDisp(img_left, img_right)
     disp = computeDisp(args.input_left, args.input_right)
     toc = time.time()
-    # writePFM(args.output, disp)
+    writePFM(args.output, disp)
+    plt.imsave(args.output.replace('.pfm', '.png'), disp, cmap = 'jet')
+    
     print('Elapsed time: %f sec.' % (toc - tic))
 
 

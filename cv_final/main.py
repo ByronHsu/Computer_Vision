@@ -29,7 +29,7 @@ def main():
     print('Elapsed time: %f sec.' % (toc - tic))
     
     writePFM(args.output, disp)
-    plt.imsave(args.output.replace('.pfm', '.png'), disp, cmap = 'jet')
+    # plt.imsave(args.output.replace('.pfm', '.png'), disp, cmap = 'jet')
     
 
 

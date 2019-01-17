@@ -25,7 +25,7 @@ def evaluate(left, right):
     maxdisp = 64
     __imagenet_stats = {'mean': [0.485, 0.456, 0.406],
                    'std': [0.229, 0.224, 0.225]}
-    left, right = cv2.resize(left, (384, 512)), cv2.resize(right, (384, 512))
+    # left, right = cv2.resize(left, (384, 512)), cv2.resize(right, (384, 512))
 
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize(**__imagenet_stats)])
     img_left = transform(left)
@@ -49,6 +49,6 @@ def evaluate(left, right):
     output = torch.squeeze(output)
     pred_disp = output.data.cpu().numpy()
     
-    pred_disp = cv2.resize(pred_disp, (384, 512))
+    # pred_disp = cv2.resize(pred_disp, (384, 512))
     
     return pred_disp
